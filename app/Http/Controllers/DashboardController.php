@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Employee;
 
 class DashboardController extends Controller
 {
@@ -23,6 +25,10 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+        $employees = Employee::all();
+      //  return view('Dashboard.default.employees.create',compact( 'users ' , 'roles' , 'types' , 'filterTypes' ));
+
+        return view('/dashboard', ['employees' => $employees]);
     }
 }
+    

@@ -7,8 +7,9 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Add new employee</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('employee-management.store') }}" enctype="multipart/form-data">
-                        {{ csrf_field() }}
+                    {!! Form::open(['action'=>'EmployeeManagementController@store', 'method'=>'POST', 'enctype'=>'multipart/form-data' ]) !!}
+                    <form class="form-horizontal">
+                        <!-- {{ csrf_field() }} -->
                         <div class="form-group{{ $errors->has('firstname') ? ' has-error' : '' }}">
                             <label for="firstname" class="col-md-4 control-label">First Name</label>
 
@@ -175,7 +176,9 @@
                         <div class="form-group">
                             <label for="avatar" class="col-md-4 control-label" >Picture</label>
                             <div class="col-md-6">
-                                <input type="file" id="picture" name="picture" required >
+                                
+                                    {{ Form::file('picture') }}
+                               
                             </div>
                         </div>
                         <div class="form-group">
@@ -186,6 +189,8 @@
                             </div>
                         </div>
                     </form>
+                        {{ csrf_field() }}
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>

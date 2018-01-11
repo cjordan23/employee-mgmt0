@@ -11,13 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard');
+Route::get('/dashboard', function () {
+    return view('/dashboard');
 })->middleware('auth');
 
 Auth::routes();
 
-Route::get('/dashboard', 'DashboardController@index');
+Route::resource('/dashboard', 'DashboardController');
 // Route::get('/system-management/{option}', 'SystemMgmtController@index');
 Route::get('/profile', 'ProfileController@index');
 

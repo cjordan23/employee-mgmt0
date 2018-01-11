@@ -24,6 +24,11 @@ class EmployeeManagementController extends Controller
         $this->middleware('auth');
     }
 
+    function useEmployeeDB(){
+        $employees = Employee::all();
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -31,6 +36,7 @@ class EmployeeManagementController extends Controller
      */
     public function index()
     {
+      
         $employees = DB::table('employees')
         ->leftJoin('city', 'employees.city_id', '=', 'city.id')
         ->leftJoin('department', 'employees.department_id', '=', 'department.id')
@@ -39,7 +45,7 @@ class EmployeeManagementController extends Controller
         ->leftJoin('division', 'employees.division_id', '=', 'division.id')
         ->select('employees.*', 'department.name as department_name', 'department.id as department_id', 'division.name as division_name', 'division.id as division_id')
         ->paginate(5);
-
+        
         return view('employees-mgmt/index', ['employees' => $employees]);
     }
 
@@ -50,13 +56,16 @@ class EmployeeManagementController extends Controller
      */
     public function create()
     {
+        
+        $employees = Employee::all();
         // $cities = City::all();
         // $states = State::all();
         $countries = Country::all();
         $departments = Department::all();
         $divisions = Division::all();
+        
         return view('employees-mgmt/create', ['countries' => $countries,
-        'departments' => $departments, 'divisions' => $divisions]);
+        'departments' => $departments, 'divisions' => $divisions], ['employees' => $employees]);
     }
 
     /**
@@ -67,16 +76,67 @@ class EmployeeManagementController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validateInput($request);
-        // Upload image
-        $path = $request->file('picture')->store('avatars');
-        $keys = ['lastname', 'firstname', 'middlename', 'address', 'city_id', 'state_id', 'country_id', 'zip',
-        'age', 'birthdate', 'date_hired', 'department_id', 'department_id', 'division_id'];
-        $input = $this->createQueryInput($keys, $request);
-        $input['picture'] = $path;
+        // $this->validateInput($request);
+        // // Upload image
+        // $path = $request->file('picture')->store('avatars');
+        // $keys = ['lastname', 'firstname', 'middlename', 'address', 'city_id', 'state_id', 'country_id', 'zip',
+        // 'age', 'birthdate', 'date_hired', 'department_id', 'department_id', 'division_id'];
+        // $input = $this->createQueryInput($keys, $request);
+        // $input['picture'] = $path;
+        $this->validate($request,[
+            'lastname'=>'required|string',
+            'firstname'=>'required|string',
+            'middlename'=>'required|string',
+            'address'=>'required|string',
+            'city_id'=>'required|integer',
+            'state_id'=>'required|integer',
+            'country_id'=>'required|integer',
+            'zip'=>'required|string',
+            'age'=>'required|integer',
+            'birthdate'=>'required',
+            'date_hired'=>'required',
+            'department_id'=>'required|integer',
+            'division_id'=>'required|integer',
+            'picture'=>'image|required|max:1999'
+        ]); 
+        
+        //Validasi File
+        if($request->hasFile('picture')){
+            //GetFileName 
+            $filenameWithExt = $request->file('picture')->getClientOriginalName();
+            //Get File Name only
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            //Get File Extension Onlu
+            $fileExt = $request->file('picture')->getClientOriginalExtension(); 
+            //Filename to Store Function
+            $fileNameToStore = $filename.'_'.time().'.'.$fileExt;
+            //Upload
+            $path = $request->file('picture')->storeAs('public/picture',$fileNameToStore);
+        }else{
+            $fileNameToStore='no-image.jpg';
+        }
         // Not implement yet
         // $input['company_id'] = 0;
-        Employee::create($input);
+        //Employee::create($input);
+
+        $employ = new Employee;
+        $employ->lastname = $request->input('lastname');
+        $employ->firstname = $request->input('firstname');
+        $employ->middlename = $request->input('middlename');
+        $employ->address = $request->input('address');
+        $employ->city_id = $request->input('city_id');
+        $employ->state_id = $request->input('state_id');
+        $employ->country_id = $request->input('country_id');
+        $employ->zip = $request->input('zip');
+        $employ->age = $request->input('age');
+        $employ->birthdate = $request->input('birthdate');
+        $employ->date_hired = $request->input('date_hired');
+        $employ->department_id = $request->input('department_id');
+        $employ->division_id = $request->input('division_id');
+        $employ->picture = $fileNameToStore;
+        $employ->save();        
+
+
 
         return redirect()->intended('/employee-management');
     }

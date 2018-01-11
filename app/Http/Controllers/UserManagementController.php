@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\User;
+use App\Employee;
 
 class UserManagementController extends Controller
 {
@@ -25,16 +26,21 @@ class UserManagementController extends Controller
         $this->middleware('auth');
     }
 
+    function useEmployeeDB(){
+        $employees = Employee::all();
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   
+        $employees = Employee::all();
         $users = User::paginate(5);
-
-        return view('users-mgmt/index', ['users' => $users]);
+        
+        return view('users-mgmt/index', ['users' => $users], ['employees' => $employees] );
     }
 
     /**
@@ -43,8 +49,9 @@ class UserManagementController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('users-mgmt/create');
+    {   
+        $employees = Employee::all();
+        return view('users-mgmt/create', ['employees' => $employees]);
     }
 
     /**
@@ -145,6 +152,7 @@ class UserManagementController extends Controller
      *  @return \Illuminate\Http\Response
      */
     public function search(Request $request) {
+        $employees = Employee::all();
         $constraints = [
             'username' => $request['username'],
             'firstname' => $request['firstname'],
@@ -153,7 +161,7 @@ class UserManagementController extends Controller
             ];
 
        $users = $this->doSearchingQuery($constraints);
-       return view('users-mgmt/index', ['users' => $users, 'searchingVals' => $constraints]);
+       return view('users-mgmt/index', ['users' => $users, 'searchingVals' => $constraints], ['employees'=>$employees]);
     }
 
     private function doSearchingQuery($constraints) {

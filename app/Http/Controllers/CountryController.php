@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Country;
+use App\Employee;
 
 class CountryController extends Controller
 {
@@ -26,8 +27,8 @@ class CountryController extends Controller
     public function index()
     {
         $countries = Country::paginate(5);
-
-        return view('system-mgmt/country/index', ['countries' => $countries]);
+        $employees = Employee::all();
+        return view('system-mgmt/country/index', ['countries' => $countries],  ['employees' => $employees] );
     }
 
     /**

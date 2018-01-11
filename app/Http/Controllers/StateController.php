@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\State;
 use App\Country;
+use App\Employee;
 
 class StateController extends Controller
 {
@@ -30,7 +31,8 @@ class StateController extends Controller
         ->leftJoin('country', 'state.country_id', '=', 'country.id')
         ->select('state.id', 'state.name', 'country.name as country_name', 'country.id as country_id')
         ->paginate(5);
-        return view('system-mgmt/state/index', ['states' => $states]);
+        $employees = Employee::all();
+        return view('system-mgmt/state/index', ['states' => $states] ,  ['employees' => $employees] );
     }
 
     /**

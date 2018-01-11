@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Division;
+use App\Employee;
 
 class DivisionController extends Controller
 {
@@ -26,8 +27,8 @@ class DivisionController extends Controller
     public function index()
     {
         $divisions = Division::paginate(5);
-
-        return view('system-mgmt/division/index', ['divisions' => $divisions]);
+        $employees = Employee::all();
+        return view('system-mgmt/division/index', ['divisions' => $divisions],  ['employees' => $employees] );
     }
 
     /**

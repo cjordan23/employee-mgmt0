@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Department;
+use App\Employee;
+
 
 class DepartmentController extends Controller
 {
@@ -26,8 +28,8 @@ class DepartmentController extends Controller
     public function index()
     {
         $departments = Department::paginate(5);
-
-        return view('system-mgmt/department/index', ['departments' => $departments]);
+        $employees = Employee::all();
+        return view('system-mgmt/department/index', ['departments' => $departments],  ['employees' => $employees]   );
     }
 
     /**

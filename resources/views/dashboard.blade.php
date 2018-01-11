@@ -7,12 +7,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <!-- CSRF Token -->
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
   <title>EM | Empployee Management</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- CSS -->
+  <link rel="stylesheet" href="{{ asset('/css/main.css') }}">
+
   <!-- Bootstrap 3.3.6 -->
   <link href="{{ asset("/bower_components/AdminLTE/bootstrap/css/bootstrap.min.css") }}" rel="stylesheet" type="text/css" />
-
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
@@ -23,14 +29,34 @@ scratch. This page gets rid of all links and provides the needed markup only.
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect.
   -->
-   <link href="{{ asset("/bower_components/AdminLTE/dist/css/skins/skin-blue.min.css")}}" rel="stylesheet" type="text/css" />
-
+  <link href="{{ asset("/bower_components/AdminLTE/dist/css/skins/skin-blue.min.css")}}" rel="stylesheet" type="text/css" />
+ 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
+
+  <!-- This is FusionChart CDN
+  <script src="https://cdn.jsdelivr.net/npm/fusioncharts@3/.npmignore"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fusioncharts@3/bower.json"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fusioncharts@3/fusioncharts.charts.d.ts"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fusioncharts@3/fusioncharts.gantt.d.ts"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fusioncharts@3/fusioncharts.maps.d.ts"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fusioncharts@3/fusioncharts.powercharts.d.ts"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fusioncharts@3/fusioncharts.ssgrid.d.ts"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fusioncharts@3/fusioncharts.treemap.d.ts"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fusioncharts@3/fusioncharts.widgets.d.ts"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fusioncharts@3/README.md"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fusioncharts@3/package.json"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fusioncharts@3/index.d.ts"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fusioncharts@3/fusioncharts.zoomscatter.d.ts"></script>
+  -->
+
+  <!-- -->
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -77,6 +103,17 @@ desired effect
     <section class="content">
 
       <!-- Your Page Content Here -->
+      <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="well">
+                <h4>Location</h4>
+                <div id="regions_div" style="width: 100%; height: 500px;"></div>
+
+              </div>
+            </div>
+          </div>
+      <div>
 
     </section>
     <!-- /.content -->
@@ -84,13 +121,14 @@ desired effect
   <!-- /.content-wrapper -->
 
   <!-- Footer -->
-  @include('layouts.footer')
+  
   
 <!-- ./wrapper -->
 
 <!-- REQUIRED JS SCRIPTS -->
 
- <!-- jQuery 2.1.3 -->
+
+<!-- jQuery 2.1.3 -->
 <script src="{{ asset ("/bower_components/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js") }}"></script>
 
 <!-- Bootstrap 3.3.2 JS -->
@@ -103,5 +141,9 @@ desired effect
      Both of these plugins are recommended to enhance the
      user experience. Slimscroll is required when using the
      fixed layout. -->
+<script type="text/javascript" src="{{ asset('/js/data.js')}}"></script>  
+<script type="text/javascript" src="{{ asset('/js/dashboard.js')}}"></script>
+<script type="text/javascript" src="{{ asset('/google/gechart1.js')}}"></script> 
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlMIVnxAhJgv8bi-lT5FjGpX6VTonZsAs&callback=initMap"></script>
 </body>
 </html>

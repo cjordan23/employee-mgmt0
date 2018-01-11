@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\City;
 use App\State;
+use App\Employee;
 
 class CityController extends Controller
 {
@@ -30,7 +31,8 @@ class CityController extends Controller
         ->leftJoin('state', 'city.state_id', '=', 'state.id')
         ->select('city.id', 'city.name', 'state.name as state_name', 'state.id as state_id')
         ->paginate(5);
-        return view('system-mgmt/city/index', ['cities' => $cities]);
+        $employees = Employee::all();
+        return view('system-mgmt/city/index', ['cities' => $cities],  ['employees' => $employees] );
     }
 
     /**
