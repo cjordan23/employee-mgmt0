@@ -7,7 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Add new employee</div>
                 <div class="panel-body">
-                    {!! Form::open(['action'=>'EmployeeManagementController@store', 'method'=>'POST', 'enctype'=>'multipart/form-data' ]) !!}
+                    {!! Form::open(['action'=>'EmployeeManagement   Controller@store', 'method'=>'POST', 'enctype'=>'multipart/form-data' ]) !!}
                     <form class="form-horizontal">
                         <!-- {{ csrf_field() }} -->
                         <div class="form-group{{ $errors->has('firstname') ? ' has-error' : '' }}">

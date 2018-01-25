@@ -67,7 +67,7 @@ class EmployeeManagementController extends Controller
         return view('employees-mgmt/create', ['countries' => $countries,
         'departments' => $departments, 'divisions' => $divisions], ['employees' => $employees]);
     }
-
+    
     /**
      * Store a newly created resource in storage.
      *

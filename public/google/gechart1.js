@@ -16,7 +16,7 @@ google.charts.load('current', {
             ['Banten',7], 
             ['Gorontalo',3], 
             ['Jambi',3], 
-            ['Jawa Barat',2], 
+            ['Jawa Barat',2],  
             ['Jawa Timur',2], 
             ['DKI Jakarta',8], 
             ['Jawa Tengah',6],
@@ -50,7 +50,7 @@ google.charts.load('current', {
             region:'ID',
             displayMode:'regions',
             resolution:'provinces',
-            zoomlevel:5
+        
             
 
         };
